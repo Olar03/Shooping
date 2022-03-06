@@ -11,8 +11,8 @@ using Shooping.Data;
 namespace Shooping.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220226175928_AddIndexToCountry")]
-    partial class AddIndexToCountry
+    [Migration("20220306135146_AddCategoryEntity")]
+    partial class AddCategoryEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,24 @@ namespace Shooping.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Shooping.Data.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("Shooping.Data.Entities.Country", b =>
                 {

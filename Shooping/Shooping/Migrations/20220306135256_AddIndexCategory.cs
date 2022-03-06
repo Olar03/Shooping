@@ -4,13 +4,13 @@
 
 namespace Shooping.Migrations
 {
-    public partial class AddIndexToCountry : Migration
+    public partial class AddIndexCategory : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateIndex(
-                name: "IX_Countries_Name",
-                table: "Countries",
+                name: "IX_Categories_Name",
+                table: "Categories",
                 column: "Name",
                 unique: true);
         }
@@ -18,8 +18,8 @@ namespace Shooping.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(
-                name: "IX_Countries_Name",
-                table: "Countries");
+                name: "IX_Categories_Name",
+                table: "Categories");
         }
     }
 }

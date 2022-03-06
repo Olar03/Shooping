@@ -1,4 +1,4 @@
-﻿@model Shooping.Data.Entities.Country
+﻿@model Shooping.Data.Entities.Category
 
 @{
     ViewData["Title"] = "Delete";
@@ -6,11 +6,12 @@
 
 <h1>Borrar</h1>
 
-<h3>Se esta borrando el País, ¿Desea continuar con el borrado?</h3>
+<h3>Se esta borrando la categoría, ¿Desea continuar con el borrado?</h3>
 <div>
 
-    <patial name="_CountryDetails" /> <!--Hace llamado de la Vista parcial-->
+    <patial name="_CategoryDetails" /> <!--Hace llamado de la Vista parcial-->
 </div>
+
 <div>
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />

@@ -11,8 +11,8 @@ using Shooping.Data;
 namespace Shooping.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220226175624_InitialDb")]
-    partial class InitialDb
+    [Migration("20220306133959_IniialDb")]
+    partial class IniialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,9 @@ namespace Shooping.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Countries");
                 });
