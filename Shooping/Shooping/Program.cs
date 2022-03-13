@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shooping.Data;
+using Shooping.Data.Entities;
+using Shooping.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +15,24 @@ builder.Services.AddDbContext<DataContext>(o =>
 });
 
 
+//TODO: Make strongest password
+builder.Services.AddIdentity<User, IdentityRole>(cfg =>
+{
+    cfg.User.RequireUniqueEmail = true;
+    cfg.Password.RequireDigit = false;
+    cfg.Password.RequiredUniqueChars = 0;
+    cfg.Password.RequireLowercase = false;
+    cfg.Password.RequireNonAlphanumeric = false;
+    cfg.Password.RequireUppercase = false;
+}).AddEntityFrameworkStores<DataContext>();
+ 
+
+
 builder.Services.AddTransient<LoadDb>(); //Hace la inyección una sola vez 
 //builder.Services.AddScoped<LoadDb>(); //Hace la inyección cada vez que se necesita 
 //builder.Services.AddSingleton<LoadDb>(); // lo inye ta una vez y lo deja en memoria
+
+builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();// Permite hacer cambios en caliente
 
 var app = builder.Build();
