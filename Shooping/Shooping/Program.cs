@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Shooping.Data;
 
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -11,6 +14,8 @@ builder.Services.AddDbContext<DataContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+
+Program: builder.Services.AddRazorPages().AddRazorRuntimeCompilation();// Permite hacer cambios en caliente
 
 var app = builder.Build();
 
