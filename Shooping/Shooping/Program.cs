@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Shooping.Data;
 
-
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -15,9 +12,26 @@ builder.Services.AddDbContext<DataContext>(o =>
 });
 
 
-Program: builder.Services.AddRazorPages().AddRazorRuntimeCompilation();// Permite hacer cambios en caliente
+builder.Services.AddTransient<LoadDb>(); //Hace la inyección una sola vez 
+//builder.Services.AddScoped<LoadDb>(); //Hace la inyección cada vez que se necesita 
+//builder.Services.AddSingleton<LoadDb>(); // lo inye ta una vez y lo deja en memoria
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();// Permite hacer cambios en caliente
 
 var app = builder.Build();
+LoadData();
+
+void LoadData()
+{
+    IServiceScopeFactory? scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (IServiceScope? scope = scopedFactory.CreateScope())
+    {
+        LoadDb? service = scope.ServiceProvider.GetService<LoadDb>();
+        service.LoadAsync().Wait();
+    }
+
+}
+
 
 if (!app.Environment.IsDevelopment())
 {
