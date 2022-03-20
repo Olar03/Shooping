@@ -9,7 +9,6 @@ namespace Shooping.Data
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
 
-
         public LoadDb(DataContext context, IUserHelper userHelper)
         {
             _context = context;
@@ -23,7 +22,7 @@ namespace Shooping.Data
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Juan", "Zuluaga", "zulu@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
-
+            await CheckUserAsync("2020", "Ledys", "Bedoya", "ledys@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.User);
         }
 
         private async Task<User> CheckUserAsync(
@@ -57,7 +56,6 @@ namespace Shooping.Data
 
             return user;
         }
-
 
         private async Task CheckRolesAsync()
         {
@@ -132,14 +130,11 @@ namespace Shooping.Data
             await _context.SaveChangesAsync();
         }
 
-
-
-
         private async Task CheckCategoriesAsync()
         {
             if (!_context.Categories.Any())
             {
-                _context.Categories.Add(new Category { Name = "Teconología" });
+                _context.Categories.Add(new Category { Name = "Tecnología" });
                 _context.Categories.Add(new Category { Name = "Ropa" });
                 _context.Categories.Add(new Category { Name = "Calzado" });
                 _context.Categories.Add(new Category { Name = "Belleza" });

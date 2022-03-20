@@ -25,15 +25,21 @@ builder.Services.AddIdentity<User, IdentityRole>(cfg =>
     cfg.Password.RequireNonAlphanumeric = false;
     cfg.Password.RequireUppercase = false;
 }).AddEntityFrameworkStores<DataContext>();
- 
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/NotAuthorized";
+    options.AccessDeniedPath = "/Account/NotAuthorized";
+});
 
 
 builder.Services.AddTransient<LoadDb>(); //Hace la inyección una sola vez 
 //builder.Services.AddScoped<LoadDb>(); //Hace la inyección cada vez que se necesita 
 //builder.Services.AddSingleton<LoadDb>(); // lo inye ta una vez y lo deja en memoria
-
 builder.Services.AddScoped<IUserHelper, UserHelper>();
+
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();// Permite hacer cambios en caliente
+
 
 var app = builder.Build();
 LoadData();
@@ -50,19 +56,19 @@ void LoadData()
 
 }
 
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
