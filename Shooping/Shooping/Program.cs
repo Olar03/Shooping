@@ -37,7 +37,7 @@ builder.Services.AddTransient<LoadDb>(); //Hace la inyección una sola vez
 //builder.Services.AddScoped<LoadDb>(); //Hace la inyección cada vez que se necesita 
 //builder.Services.AddSingleton<LoadDb>(); // lo inye ta una vez y lo deja en memoria
 builder.Services.AddScoped<IUserHelper, UserHelper>();
-
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();// Permite hacer cambios en caliente
 
 
