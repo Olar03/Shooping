@@ -11,7 +11,7 @@ namespace Shooping.Helpers
 
         Task<IdentityResult> AddUserAsync(User user, string password);
 
-        //Task<User> AddUserAsync(AddUserViewModel model);
+        Task<User> AddUserAsync(AddUserViewModel model);
 
         Task CheckRoleAsync(string roleName);
 
